@@ -227,14 +227,20 @@ let add2 = function (a, b) {
 
 // calc(30, (result: number) => console.log(`result is ${result}`)); // result is 90
 
-const f = (callback: () => void) => callback();
+// const f = (callback: () => void) => callback();
 
-type NumberToNumberFunc = (arg0: number) => number;
+// type NumberToNumberFunc = (arg0: number) => number;
 
-export const add = (a: number): NumberToNumberFunc => {
-  const _add: NumberToNumberFunc = (b: number): number => {
-    return a + b; // 클로저
-  };
+// export const add = (a: number): NumberToNumberFunc => {
+//   const _add: NumberToNumberFunc = (b: number): number => {
+//     return a + b; // 클로저
+//   };
 
-  return _add;
-};
+//   return _add;
+// };
+
+/*
+  보통함수와 고차함수
+  const add1 = (a: number, b:number):number => a + b; // 보통 함수
+  const add2 = (a:number): (number) => number => (b:number):number => a + b; // 고차 함수
+*/
