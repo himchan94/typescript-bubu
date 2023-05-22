@@ -209,9 +209,23 @@ let add2 = function (a, b) {
 /*
   일등 함수
 
-  콜백 함수
-
+  콜백 함수 : 매개변수 형태로 동작하는 함수
+  
 */
+
+/* 중첩함수 */
+
+// const calc = (value: number, cb: (number) => void): void => {
+//   let add = (a, b) => a + b;
+//   function multiply(a, b) {
+//     return a * b;
+//   }
+
+//   let result = multiply(add(1, 2), value);
+//   cb(result);
+// };
+
+// calc(30, (result: number) => console.log(`result is ${result}`)); // result is 90
 
 const f = (callback: () => void) => callback();
 
