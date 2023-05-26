@@ -244,3 +244,124 @@ let add2 = function (a, b) {
   const add1 = (a: number, b:number):number => a + b; // 보통 함수
   const add2 = (a:number): (number) => number => (b:number):number => a + b; // 고차 함수
 */
+
+// const add2 = (a: number): ((number) => number) => (b: number): number => a + b;
+
+// const add2 =
+//   (a: number): ((number: number) => number) =>
+//   (b: number): number =>
+//     a + b;
+
+// console.log(add2(2)(3));
+
+type NumberToNumberFunc = (number: number) => number;
+
+const newAdd = (a: number): NumberToNumberFunc => {
+  // NumberToNumberFunc 타입의 함수 반환
+  const _add: NumberToNumberFunc = (b: number): number => {
+    // number 타입의 값 반환
+
+    return a + b; // 클로저
+  };
+  return _add;
+};
+
+let fn: NumberToNumberFunc = newAdd(1);
+
+let result = fn(2);
+console.log("result", result);
+
+// 코드를 관찰해보면 fn은 단순히 add(1)을 저장하는 임시 변수 역할
+// 따라서 fn과 같은 임시 변수를 사용하지 않는다면
+// console.log(add(1)(2)) 처럼 사용해야 한다.
+
+const multiply = (a: number) => (b: number) => (c: number) => a * b * c;
+
+// 매개변수에 비구조화 할당문 사용하기
+
+type Person = { name: string; age: number };
+
+const printPerson = ({ name, age }: Person): void =>
+  console.log(`name: ${name}, age: ${age}`);
+
+// 색인 키와 값으로 객체 만들기
+type KeyType = {
+  [key: string]: string;
+};
+
+const makeObject = (key: string, value: string): KeyType => ({ [key]: value });
+
+/*
+  클래스와 메서드
+  타입스크립트이 function 키워드로 만든 함수는 Function이란 클래스의 인스턴스, 즉 객체다.
+  객체지향 언어에서 인스턴스는 this 키워드를 사용할 수 있다.
+  타입스크립트에서 function 키워드로 만든 함수에 this 키워드를 사용할 수 있다.
+  하지만 화살표 함수에는 this 키워드를 사용할 수 없다.
+
+  메서드란?
+  메서드는 function으로 만든 함수 표현식을 담고 있는 속성이다.
+
+*/
+export class A {
+  value: number = 1;
+  method: () => void = function (this: { value: number }): void {
+    console.log(`value: ${this.value}`);
+  };
+}
+
+export class B {
+  constructor(public value: number = 1) {}
+  method(): void {
+    console.log(`value: ${this.value}`);
+  }
+}
+
+// export class C {
+//   constructor(number: number) {
+//     const value: number = number;
+//   }
+// }
+
+// 정적 메서드
+/* 
+  정적 메서드
+  클래스의 속성은 static 수정자(modifier)를 속성 앞에 붙여서 정적으로 만들 수 있다.
+*/
+
+export class C {
+  static whoAreYou(): string {
+    return `I'm class C`;
+  }
+}
+
+export class D {
+  static whoAreYou(): string {
+    return `I'm class D`;
+  }
+}
+
+console.log(C.whoAreYou());
+console.log(D.whoAreYou());
+
+/*
+  메서드 체인
+  타입스크립트로 메서드 체인을 구현하려면 메서드가 항상 this를 반환하게 한다.
+*/
+
+export class calculator {
+  constructor(public value: number = 0) {}
+
+  add(value: number) {
+    this.value += value;
+    return this;
+  }
+
+  multiply(value: number) {
+    this.value *= value;
+    return this;
+  }
+}
+
+let calc = new calculator();
+let calcResult = calc.add(1).add(2).multiply(3).value;
+console.log(calcResult);
