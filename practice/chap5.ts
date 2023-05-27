@@ -124,5 +124,71 @@ console.log(Array.isArray(a), Array.isArray(o)); // true false
 */
 
 // range 함수는 재귀 함수 스타일로 동작하며, R.rage 처럼 from to까지 수로 구성된 배열을 생성해준다.
+// const range = (from: number, to: number): number[] =>
+//   from < to ? [from, ...range(from + 1, to)] : [];
+
+/*
+  선언형 프로그래밍과 배열
+
+  명령형 프로그래밍이란?
+  프로그램의 기본 형태는 입력 데이터를 얻고 가공한 다음, 결과를 출력하는 형태로 구성된다.
+  - 입력 데이터 얻기
+  - 입력 데이터 가공해 출력 데이터 생성
+  - 출력 데이터 출력
+
+  명령형 프로그래밍에서는 여러 개의 데이터를 대상으로 할 때 다음처럼 for 문을 사용해서 구현한다.
+  for(; ; ){
+    입력 데이터 얻기
+    입력 데이터 가공해 출력 데이터 생성
+    출력 데이터 출력
+  }
+
+ $$ 반면 선언형 프로그래밍은 시스템 자원의 효율적인 운용보다는 일괄된 문제 해결 구조에 집중한다.
+ 선언형 프로그래밍은 명령형 프로그래밍처럼 for 문을 사용하지 않고 모든 데이터를 배열에 담는다.
+ 그리고 문제가 해결될 때까지 끊임없이 또 다른 형태의 배열로 가공하는 방식을 구현한다.
+
+ - 문제를 푸는 데 필요한 모든 데이터 배열에 저장
+ - 입력 데이터 배열을 가공해 출력 데이터 배열 생성
+ - 출력 데이터 배열에 담긴 아이템 출력
+ */
+
+// 1부터 100까지 더하기 문제 풀이 (명령형)
+let sum = 0;
+for (let val = 1; val <= 100; ) {
+  sum += val++;
+}
+console.log(sum);
+
+// 선언형으로 구현하기
+
 const range = (from: number, to: number): number[] =>
   from < to ? [from, ...range(from + 1, to)] : [];
+
+// 선언형은 데이터 생성과 가공 과정을 분리한다. (1,100)까지의 배열을 생성
+let numbers: number[] = range(1, 100 + 1);
+console.log(numbers);
+
+// fold: 배열 데이터 접기
+// 함수형 프로그래밍에서 폴드(fold)는 특별한 의미가 있는 용어다.
+// 폴드는 [1 ... 100]형태의 배열 데이터를 가공해 5050과 같은 하나의 값을 생성할 때 사용한다.
+/*
+    배열의 아이템 타임이 T라고 할 때 배열은 T[]로 표현할 수 있는데
+    폴드 함수는 T[] 타입 배열을 가공해 T타입 결과를 만들어 준다.
+    폴드 함수의 동작 방식은 마치 부채처럼 배열을 펼처 놓은 다음, 부채를 접어서(fold) 결과를 만들어 내는 것으로 생각 가능
+  */
+
+const fold = <T>(
+  array: T[],
+  callback: (result: T, val: T) => T,
+  initValue: T
+) => {
+  let result: T = initValue;
+  for (let i = 0; i < array.length; ++i) {
+    const value = array[i];
+    result = callback(result, value);
+  }
+  return result;
+};
+
+let result = fold(numbers, (result, value) => result + value, 0);
+console.log("result", result);
