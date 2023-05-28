@@ -192,3 +192,8 @@ const fold = <T>(
 
 let result = fold(numbers, (result, value) => result + value, 0);
 console.log("result", result);
+
+/*
+  범용적이고 재사용 가능한 기능이란 관점에서 1~100까지 홀수의 합 구하기
+
+*/
