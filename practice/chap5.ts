@@ -196,4 +196,29 @@ console.log("result", result);
 /*
   범용적이고 재사용 가능한 기능이란 관점에서 1~100까지 홀수의 합 구하기
 
+  명령형
+  let oddSum = 0;
+  for (let val = 1; val <= 100; val += 1) oddSum += val;
+  console.log(oddSum);
+
+  선언형
+  const filter = <T>(
+  array: T[],
+  callback: (value: T, index?: number) => boolean
+  ): T[] => {
+  let result: T[] = [];
+  for (let index: number = 0; index < array.length; ++index) {
+    const value = array[index];
+    if (callback(value, index)) {
+      result = [...result, value];
+    }
+  }
+
+  return result;
+  };
+
+  let numbers: number[] = range(1, 100 + 1);
+  const isOdd = (n: number): boolean => n % 2 != 0;
+  let result = fold(filter(numbers, isOdd), (result, value) => result + value, 0);
+  console.log(result);
 */
