@@ -31,3 +31,79 @@ function logAge(someone: Person) {
   console.log(someone.age);
 }
 ```
+
+# 인터페이스를 활용한 함수의 반환타입 지정
+
+```ts
+function getPerson(someone: Person): Person {
+  return someone;
+}
+```
+
+# 옵셔널 인터페이스
+
+```ts
+interface Person {
+  name?: string;
+  age: number;
+}
+```
+
+# 인터페이스의 상속
+
+- 클래스의 상속
+
+```ts
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  logAge() {
+    console.log(this.age);
+  }
+}
+
+class Developer extends Person {
+  constructor(name, age, skill) {
+    super(name, age);
+    this.skill = skill;
+  }
+
+  logDeveloperInfo() {
+    this.logAge();
+    console.log(this.name);
+    console.log(this.skill);
+  }
+}
+```
+
+- 인터페이스의 상속
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Developer extends Person {
+  skill: string;
+}
+
+var ironman: Developer = {
+  name: "아이언맨",
+  age: 21,
+  skill: "만들기",
+};
+```
+
+아래처럼 인터페이스를 정의한 것과 같다.
+
+```ts
+interface Developer {
+  name: string;
+  age: number;
+  skill: string;
+}
+```
