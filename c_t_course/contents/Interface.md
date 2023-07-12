@@ -1,4 +1,4 @@
-- 타입스크립트에서 인터페이스랑 객체 타입을 정의할 떄 사용하는 문법
+- 타입스크립트에서 인터페이스란 객체 타입을 정의할 때 사용하는 문법
 
 - 인터페이스로 타입을 정의할 수 있는 부분들
 
@@ -106,4 +106,112 @@ interface Developer {
   age: number;
   skill: string;
 }
+```
+
+- 인터페이스 상속 시 주의사항 1
+
+```ts
+interface Person {
+  name: string;
+  age: number;
+}
+
+interface Developer extends Person {
+  name: number;
+}
+```
+
+위 처럼, 상속받은 인터페이스의 속성을 재할당하면 에러가 발생한다.
+
+- 인터페이스 상속 시 주의사항 2
+
+```ts
+interface Hero {
+  power: boolean;
+}
+
+interface Person extends Hero {
+  name: string;
+  age: number;
+}
+
+interface Developer extends Person {
+  skill: string;
+}
+
+var ironman: Developer = {
+  name: "아이언맨",
+  age: 21,
+  skill: "만들기",
+  power: true,
+};
+```
+
+위 처럼 연속 상속을 통한 정의도 가능하다.
+
+# 배열 인덱싱 타입 정의
+
+```ts
+interface StringArray {
+  [index: number]: string;
+}
+
+var companies: StringArray = ["삼성", "네이버", "구글"];
+```
+
+- Error
+
+```ts
+interface StringArray {
+  [index: string]: string;
+}
+
+var companies: StringArray = ["삼성", "네이버", "구글"]; // 배열의 인덱스는 숫자이므로 에러가 발생한다.
+```
+
+# 객체의 인덱싱 타입 정의
+
+```ts
+interface SalaryMap {
+  [level: string]: number;
+}
+
+var salary: SalaryMap = {
+  junior: 100,
+};
+```
+
+# 인덱스 시그니처
+
+```ts
+interface SalaryInfo {
+  [level: string]: string;
+}
+
+var salary: SalaryInfo = {
+  junior: "100원",
+  mid: "300원",
+  senior: "700원",
+  ceo: "0원",
+  newbie: "50원",
+};
+```
+
+- 객체의 속성 이름과 개수가 구체적으로 정의되어 있다면 인터페이스에서 속성 이름과 속성 값의 타입을 명시하는 것이 더 효과적이다.
+- 객체의 속성, 이름, 개수가 동적이라면 인덱스 시그니처가 효과적이다.
+
+* 혼용도 가능하다
+
+```ts
+interface User {
+  [property: string]: string;
+  id: string;
+  name: string;
+}
+
+var seho: User = {
+  id: "1",
+  name: "세호",
+  address: "부산",
+};
 ```
