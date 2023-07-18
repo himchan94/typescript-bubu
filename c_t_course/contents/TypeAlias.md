@@ -65,3 +65,77 @@ type Admin = Person & Devloper;
 ```
 
 또한 타입 별칭은 제네릭, 유틸리티 타입, 맵드 타입과도 연동해서 사용할 수 있다.
+
+```ts
+//제네릭
+type Dropdonw<T> = {
+  id: string;
+  title: T;
+};
+
+//유틸리티 타입
+type Admin = { name: string; age: number; role: string };
+type OnlyName = Pick<Admin, "name">;
+
+// 맵드 타입
+type Picker<T, K extends keyof T> = {
+  [P in K]: T[P];
+};
+```
+
+2. 백엔드와의 인터페이스 정의
+
+```ts
+// 1. 타입 별칭으로 API 함수의 응답 형태를 정의
+type User = {
+  id: string;
+  name: string;
+}
+
+function fetchData(): User {
+  return axios.get('http://localhost:3000/user/1');
+}
+
+
+// 2. 인터페이스로 API 함수의 응답 형태를 정의
+interface User {
+  id: string;
+  name: string;
+}
+
+function fetchData: User {
+  return axios.get('http://localhost:3000/user/1');
+}
+```
+
+에디터의 미리보기 기능만 생각한다면 타입 별칭을 사용하는 것이 나쁘지는 않지만, 인터페이스를 이용했을 때의 장점이 더 크다
+
+```ts
+interface Admin {
+  role: string;
+  department: string;
+}
+
+// 상속을 통한 인터페이스 확장
+interface User extends Admin {
+  id: string;
+  name: string;
+}
+
+// 선언 병합을 통한 타입 확장
+interface User {
+  skill: string;
+}
+```
+
+```ts
+interface User {
+  id: string;
+  name: string;
+  role: string;
+  department: string;
+  skill: string;
+}
+```
+
+위 처럼 유연하게 타입을 확장하는 관점에서는 타입 별칭보다 인터페이스가 더 유리하다.
