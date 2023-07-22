@@ -66,3 +66,50 @@ enum Direction {
   Right = 13,
 }
 ```
+
+### 문자형 이넘
+
+문자형 이넘이란 이넘의 속성 값에 문자열을 연결한 이널을 의미한다.
+다, 문자열로 지정해주어야하며 선언된 속성 순서대로 값이 증가하는 규칙도 없다.
+
+```ts
+enum Direction {
+  Up = "Up",
+  Down = "Donw",
+  Left = "Left",
+  Right = "Right",
+}
+```
+
+### 다양한 이넘의 특징
+
+혼합이넘
+
+```ts
+enum Answer = {
+  Yes = 'Yes',
+  No = 1,
+}
+```
+
+값의 정의 방식
+
+```ts
+enum Authorization {
+  User, //0
+  Admin, //1
+  SuperAdmin = User + Admin, // 1
+  God = "abc".length, //3
+}
+```
+
+const Enum은 컴파일 후 일반 이넘으로 변환했을 때와 다르게 아무 값도 생성되지 않는다 (컴파일 했을 때 코드량이 줄어드는 장점이 있다.)
+단, 항상 속성에 고정 값을 넣어줘야 한다.
+
+```ts
+const enum logLevel {
+  Debug = "Debug",
+  Info = "Info",
+  Error = "Error",
+}
+```
